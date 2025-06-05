@@ -10,7 +10,6 @@ dotenv.config();
 
 const app = express();
 app.use(cors());
-const __dirname = path.resolve();
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -25,10 +24,10 @@ io.on("connection", (socket) => {
 });
 
 if(process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+  app.get("/{*any}", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
   });
 }
 
